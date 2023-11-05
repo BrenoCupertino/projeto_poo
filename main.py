@@ -1,7 +1,6 @@
 from tupy import *
 from modules.personagem import Personagem
 from modules.botao import Botao
-from assets import img
 
 class botao1(Botao):
     def __init__(self,x,y,boy,girl):
@@ -15,19 +14,6 @@ class botao1(Botao):
         elif self._collides_with(self._girl):
             self._c1=True 
         super().update() 
-
-class fireboy(Personagem):
-    def __init__(self,x,y,fogo):
-        self._file = './assets/img/boyfrente0.png'
-        self._x = x
-        self._y = y
-
-
-class watergirl(Personagem):
-    def __init__(self,x,y,agua):
-        self._file = './assets/img/girlfrente0.png'
-        self._x = x
-        self._y = y
 
 class plataforma(BaseImage):
     def __init__(self,x,y):
