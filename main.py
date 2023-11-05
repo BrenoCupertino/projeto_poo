@@ -1,6 +1,6 @@
 from tupy import *
-from modules.personagem import Personagem
-from modules.botao import Botao
+from modulos.personagem import Personagem
+from modulos.botao import Botao
 
 class botao1(Botao):
     def __init__(self,x,y,boy,girl):
