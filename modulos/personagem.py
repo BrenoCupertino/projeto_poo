@@ -38,11 +38,11 @@ class Personagem(BaseImage):
     def __init__(self, x, y, elemento):
         self._elemento = elemento
         if self._elemento == "fogo":
-            self._file = './assets/img/boyfrente0.png'
+            self._file = './assets/imagens/boyfrente0.png'
             self._tipo = 'boy'
             self._l1 = ["Up","Left","Right"]
         elif self._elemento == "agua":
-            self._file = './assets/img/girlfrente0.png'
+            self._file = './assets/imagens/girlfrente0.png'
             self._tipo = 'girl'
             self._l1 = ["w", "a", "d"]
         self._x = x
@@ -95,7 +95,7 @@ class Personagem(BaseImage):
 
     def atualiza_imagem(self):
         nome = self._direcao.value
-        self._file = f'{self._tipo}{nome}{self._quadro}.png'
+        self._file = f'./assets/imagens/{self._tipo}{nome}{self._quadro}.png'
 
     def atualiza_posicao(self, velocidade):
         self._x += velocidade.x

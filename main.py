@@ -17,7 +17,7 @@ class botao1(Botao):
 
 class plataforma(BaseImage):
     def __init__(self,x,y):
-        self._file = './assets/img/plataforma.png'
+        self._file = './assets/imagens/plataforma.png'
         self._x = x
         self._y = y
 
