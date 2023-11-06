@@ -13,6 +13,9 @@ class Vetor:
 
 Vetor.ZERO = Vetor(0, 0)
 
+class Teste:
+    pass
+
 class Contador:
     def __init__(self, maximo):
         self._maximo = maximo
