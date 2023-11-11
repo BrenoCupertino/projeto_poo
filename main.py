@@ -1,7 +1,8 @@
 from tupy import *
-from modulos.personagem import Personagem
-from modulos.botao import Botao
-### sjkfhsknsklgmçlsgçlg
+from modules.personagem import Personagem
+from modules.botao import Botao
+
+
 class botao1(Botao):
     def __init__(self,x,y,boy,girl):
         super().__init__(x,y)
