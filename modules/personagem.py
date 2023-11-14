@@ -35,10 +35,11 @@ class Direcao(Enum):
     DIREITA = "direita"
     NULO= "frente"
 
+
 class Personagem(BaseImage):
     VELOCIDADE = 10
 
-    def __init__(self, x, y, elemento):
+    def __init__(self, x, y, elemento ):
         self._elemento = elemento
         if self._elemento == "fogo":
             self._file = './assets/images/boyfrente0.png'
