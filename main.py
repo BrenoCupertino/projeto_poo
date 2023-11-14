@@ -3,6 +3,7 @@ from tupy import *
 from modules.personagem import Personagem
 from modules.botao import Botao
 from modules.campo import Campo
+from modules.diamante import Diamante
 
 """ class botao1(Botao):
     def __init__(self,x,y,boy,girl):
@@ -18,7 +19,7 @@ from modules.campo import Campo
         super().update()  """
 
 
-class Plataforma(Image):
+class Plataforma(BaseImage):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
         super().__init__(file, x, y)
     
@@ -28,12 +29,11 @@ class Plataforma(Image):
     def set_y(self, y: int) -> None:
         self._y = y
 
-class Obstaculo(Image):
+class Obstaculo(BaseImage):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None, tipo: str | None = None) -> None:
         super().__init__(file, x, y)
         self.tipo=tipo
 
-#Plataforma(urlOriginal, 804, 230), Plataforma(urlOriginal, 815, 230)
 
 class Porta(BaseImage):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
@@ -47,15 +47,16 @@ if __name__ == '__main__':
     urlOriginal: str = './assets/images/plataforma-original.png'
     urlRampa: str = './assets/images/rampa.png'
     urlRampa02: str = './assets/images/rampa02.png'
-    boy: Personagem = Personagem(115, 450, 'fogo')
-    girl: Personagem = Personagem(115, 370, 'agua')
+    boy: Personagem = Personagem(115, 439, 'fogo')
+    girl: Personagem = Personagem(115, 360, 'agua')
     porta0: Porta = Porta("./assets/images/firegate0.png", 110, 92)
     porta1: Porta = Porta("./assets/images/watergate0.png", 210, 92)
     elevador: Elevador = Elevador("./assets/images/elevador.png",800, 230)
-    
+    botao0: Botao = Botao("./assets/images/botao.png",730,219)
+    botao1: Botao = Botao("./assets/images/botao.png",700,125)
     plataformas: list[list[Plataforma]] = [
         [
-        Plataforma('./assets/images/plataforma01.png', 190, 410), Plataforma(urlOriginal, 815, 410), Plataforma(urlRampa, 776, 410)
+        Plataforma('./assets/images/plataforma01.png', 190, 400), Plataforma(urlOriginal, 815, 410), Plataforma(urlRampa, 776, 410)
         ], 
 
         [
@@ -70,7 +71,10 @@ if __name__ == '__main__':
             Plataforma('./assets/images/plataforma01.png', 300, 135), Plataforma(urlRampa, 430, 120), Plataforma('./assets/images/plataforma04.png', 534, 105), Plataforma(urlRampa02, 639, 105), Plataforma(urlRampa02, 665, 120), Plataforma(urlOriginal, 700, 135), Plataforma(urlOriginal, 737, 135), Plataforma(urlOriginal, 150, 135), Plataforma(urlOriginal, 115, 135), Plataforma(urlOriginal, 87, 135)
         ]
     ]
+    diamantes: list[list[Diamante]] = [[Diamante('./assets/images/diamante-azul.png',592,450,"azul"),Diamante('./assets/images/diamante-azul.png',400,185,"azul"),Diamante('./assets/images/diamante-azul.png',509,330,"azul"),Diamante('./assets/images/diamante-azul.png',534,70,"azul")],
+        [Diamante('./assets/images/diamante-vermelho.png',397,450,"vermelho"), Diamante('./assets/images/diamante-vermelho.png',210,200,"vermelho"), Diamante('./assets/images/diamante-vermelho.png',815,385,"vermelho"), Diamante('./assets/images/diamante-vermelho.png',650,200,"vermelho")]                               
+        ]
     poison: Obstaculo = Obstaculo('./assets/images/poison0.png', 570, 362)
-    fire: Obstaculo = Obstaculo('./assets/images/fire0.png', 397, 475)
-    water: Obstaculo = Obstaculo('./assets/images/water0.png', 592, 475)
+    fire: Obstaculo = Obstaculo('./assets/images/fire0.png', 397, 481)
+    water: Obstaculo = Obstaculo('./assets/images/water0.png', 592, 481)
     run(globals())

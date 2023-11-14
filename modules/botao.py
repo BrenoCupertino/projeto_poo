@@ -15,13 +15,12 @@ class Elevador(BaseImage):
         return self._y
     
 class Botao(BaseImage):
-    def __init__(self,x,y):
+    def __init__(self,file,x,y):
         self._x=x
         self._y=y
-        self._elevador=Elevador(450,300)
         self._c1=False
         self._t=0
-        self._file='botao.png'
+        self._file=file
         
     def uptade(self):
         if self._c1 is True:

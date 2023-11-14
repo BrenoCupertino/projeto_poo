@@ -62,7 +62,6 @@ class Personagem(BaseImage):
     @property
     def y(self):
         return self._y
-    
     def obtem_velocidade(self) -> Vetor:
         velx = 0
         vely = 0
