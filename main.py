@@ -19,7 +19,7 @@ from modules.diamante import Diamante
         super().update()  """
 
 
-class Plataforma(BaseImage):
+class Plataforma(Image):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
         super().__init__(file, x, y)
     
@@ -42,6 +42,9 @@ class Porta(BaseImage):
 class Elevador(BaseImage):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
         super().__init__(file, x, y)
+class Cubo(Image):
+    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
+        super().__init__(file, x, y)
 if __name__ == '__main__':
     nivel1: Campo = Campo('./assets/images/campo-teste.png', 450, 250)
     urlOriginal: str = './assets/images/plataforma-original.png'
@@ -54,17 +57,18 @@ if __name__ == '__main__':
     elevador: Elevador = Elevador("./assets/images/elevador.png",800, 230)
     botao0: Botao = Botao("./assets/images/botao.png",730,219)
     botao1: Botao = Botao("./assets/images/botao.png",700,125)
+    cubo: Cubo = Cubo('./assets/images/cubo.png',200,300)
     plataformas: list[list[Plataforma]] = [
         [
         Plataforma('./assets/images/plataforma01.png', 190, 400), Plataforma(urlOriginal, 815, 410), Plataforma(urlRampa, 776, 410)
         ], 
 
         [
-        Plataforma('./assets/images/plataforma03.png', 227, 325), Plataforma(urlRampa02, 408, 325), Plataforma(urlRampa02, 435, 340),  Plataforma('./assets/images/plataforma15.png', 473, 360), Plataforma('./assets/images/plataforma15.png',509, 360), Plataforma('./assets/images/plataforma15.png',632, 360), Plataforma('./assets/images/plataforma15.png',665, 360), Plataforma('./assets/images/rampa20.png', 704, 362), Plataforma(urlOriginal, 85, 310), Plataforma(urlRampa02, 123, 310)
+        Plataforma('./assets/images/plataforma03.png', 227, 325), Plataforma(urlRampa02, 408, 325), Plataforma(urlRampa02, 435, 340),  Plataforma('./assets/images/plataforma15.png', 473, 360), Plataforma('./assets/images/plataforma15.png',509, 360), Plataforma('./assets/images/plataforma15.png',632, 360), Plataforma('./assets/images/plataforma15.png',665, 360), Plataforma('./assets/images/rampa20.png', 704, 362), Plataforma(urlOriginal, 170, 230),
         ],
 
         [
-        Plataforma(urlRampa, 180, 230), Plataforma(urlOriginal, 218, 230), Plataforma(urlRampa, 237, 216), Plataforma('./assets/images/plataforma01.png', 379, 216), Plataforma(urlRampa02, 524, 216), Plataforma(urlOriginal, 560, 230), Plataforma('./assets/images/plataforma04.png', 670, 230) 
+        Plataforma(urlRampa, 132, 230), Plataforma(urlOriginal, 218, 230), Plataforma(urlRampa, 237, 216), Plataforma('./assets/images/plataforma01.png', 379, 216), Plataforma(urlRampa02, 524, 216), Plataforma(urlOriginal, 560, 230), Plataforma('./assets/images/plataforma04.png', 670, 230) 
         ],
 
         [
