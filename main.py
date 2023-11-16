@@ -1,11 +1,11 @@
 from typing import Optional
 from tupy import *
-from modules.personagem import Personagem
+from modules.personagem import Personagem,Porta
 from modules.botao import Botao
 from modules.campo import Campo
-from modules.diamante import Diamante
+from modules.objetos import *
 
-""" class botao1(Botao):
+"""class botao1(Botao):
     def __init__(self,x,y,boy,girl):
         super().__init__(x,y)
         self._boy=boy
@@ -16,47 +16,24 @@ from modules.diamante import Diamante
             self._c1=True
         elif self._collides_with(self._girl):
             self._c1=True 
-        super().update()  """
-
-
-class Plataforma(Image):
-    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
-        super().__init__(file, x, y)
-    
-    def set_x(self, x: int) -> None:
-        self._x = x
-
-    def set_y(self, y: int) -> None:
-        self._y = y
-
-class Obstaculo(BaseImage):
-    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None, tipo: str | None = None) -> None:
-        super().__init__(file, x, y)
-        self.tipo=tipo
-
-
-class Porta(BaseImage):
-    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
-        super().__init__(file, x, y)
+        super().update()"""""
 
 class Elevador(BaseImage):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
         super().__init__(file, x, y)
-class Cubo(Image):
-    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
-        super().__init__(file, x, y)
+
 if __name__ == '__main__':
     nivel1: Campo = Campo('./assets/images/campo-teste.png', 450, 250)
     urlOriginal: str = './assets/images/plataforma-original.png'
     urlRampa: str = './assets/images/rampa.png'
     urlRampa02: str = './assets/images/rampa02.png'
-    boy: Personagem = Personagem(115, 439, 'fogo')
-    girl: Personagem = Personagem(115, 360, 'agua')
     porta0: Porta = Porta("./assets/images/firegate0.png", 110, 92)
     porta1: Porta = Porta("./assets/images/watergate0.png", 210, 92)
+    boy: Personagem = Personagem(115, 439, 'fogo', porta1)
+    girl: Personagem = Personagem(115, 360, 'agua', porta0)
     elevador: Elevador = Elevador("./assets/images/elevador.png",800, 230)
     botao0: Botao = Botao("./assets/images/botao.png",730,219)
-    botao1: Botao = Botao("./assets/images/botao.png",700,125)
+    botao2: Botao = Botao("./assets/images/botao.png",700,125)
     cubo: Cubo = Cubo('./assets/images/cubo.png',200,300)
     plataformas: list[list[Plataforma]] = [
         [
@@ -81,4 +58,5 @@ if __name__ == '__main__':
     poison: Obstaculo = Obstaculo('./assets/images/poison0.png', 570, 362)
     fire: Obstaculo = Obstaculo('./assets/images/fire0.png', 397, 481)
     water: Obstaculo = Obstaculo('./assets/images/water0.png', 592, 481)
+
     run(globals())
