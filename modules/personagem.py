@@ -38,6 +38,7 @@ class Direcao(Enum):
 
 class Personagem(BaseImage):
     VELOCIDADE = 10
+    GRAVIDADE = 2
 
     def __init__(self, x, y, elemento ):
         self._elemento = elemento
@@ -53,7 +54,9 @@ class Personagem(BaseImage):
         self._y = y
         self._direcao="frente"
         self._contador=Contador(7)
+        self.tempo_caindo = 0
         self._quadro: int=0
+        self.velocidade_atual = Vetor(0,0)
 
     @property
     def x(self):
@@ -62,6 +65,7 @@ class Personagem(BaseImage):
     @property
     def y(self):
         return self._y
+    
     def obtem_velocidade(self) -> Vetor:
         velx = 0
         vely = 0
@@ -82,15 +86,22 @@ class Personagem(BaseImage):
             return Direcao.DIREITA
         else:
             return Direcao.NULO
+    
+    def gravidade(self) -> None:
+
+        self.atualiza_posicao(Vetor(0, min(4.9, (self.tempo_caindo/30) * self.GRAVIDADE)))
+        self.tempo_caindo += 2
+    
 
     def update(self):
         self._contador.incrementa()
-        velocidade = self.obtem_velocidade()
-        self._direcao = self.obtem_direcao(velocidade)
-        self.atualiza_posicao(velocidade)
+        self.velocidade_atual = self.obtem_velocidade()
+        self._direcao = self.obtem_direcao(self.velocidade_atual)
+        self.atualiza_posicao(self.velocidade_atual)
         self.atualiza_imagem()
+        self.gravidade()
 
-        if velocidade == Vetor.ZERO:
+        if self.velocidade_atual == Vetor.ZERO:
             self._quadro = 0
         elif self._contador.esta_zerado():
             self._quadro = 1 - self._quadro
@@ -100,6 +111,6 @@ class Personagem(BaseImage):
         nome = self._direcao.value
         self._file = f'./assets/images/{self._tipo}{nome}{self._quadro}.png'
 
-    def atualiza_posicao(self, velocidade):
+    def atualiza_posicao(self, velocidade: Vetor):
         self._x += velocidade.x
         self._y += velocidade.y
