@@ -22,7 +22,7 @@ class Botao(BaseImage):
         self._t=0
         self._file=file
         
-    def uptade(self):
+    def update(self):
         if self._c1 is True:
             while self._elevador.x<=self._elevador.x+15:
                 self._elevador.y-=5

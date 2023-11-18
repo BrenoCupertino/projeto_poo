@@ -1,6 +1,6 @@
 from typing import Optional
 from tupy import *
-from modules.personagem import Personagem,Porta
+from modules.personagem import Personagem, Porta
 from modules.botao import Botao
 from modules.campo import Campo
 from modules.objetos import *
@@ -16,11 +16,22 @@ from modules.objetos import *
             self._c1=True
         elif self._collides_with(self._girl):
             self._c1=True 
-        super().update()"""""
+        super().update()"""
 
 class Elevador(BaseImage):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
         super().__init__(file, x, y)
+        
+class Personagem(Personagem):
+
+    def update(self):
+        super().update()
+        for lista in plataformas:
+            for item in lista:
+                if self._collides_with(item):
+                    self.tempo_caindo = 0
+        if self._collides_with(elevador):
+            self.tempo_caindo = 0
 
 if __name__ == '__main__':
     nivel1: Campo = Campo('./assets/images/campo-teste.png', 450, 250)
