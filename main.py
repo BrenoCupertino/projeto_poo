@@ -32,7 +32,22 @@ class Personagem(Personagem):
                     self.tempo_caindo = 0
         if self._collides_with(elevador):
             self.tempo_caindo = 0
+class Cubo(Cubo):
 
+    def update(self):
+        self.y += min(4.9, (self.tempo_caindo_cubo/30)*self.GRAVIDADE)
+        self.tempo_caindo_cubo += 2
+        for lista in plataformas:
+            for item in lista:
+                if self._collides_with(item):
+                    self.tempo_caindo_cubo = 0
+        if self._collides_with(elevador):
+            self.tempo_caindo_cubo = 0
+        if self._collides_with(boy):
+            self.x += boy.velocidade_atual.x
+        if self._collides_with(girl):
+            self.x += girl.velocidade_atual.x
+            
 if __name__ == '__main__':
     nivel1: Campo = Campo('./assets/images/campo-teste.png', 450, 250)
     urlOriginal: str = './assets/images/plataforma-original.png'
