@@ -32,11 +32,11 @@ class Personagem(Personagem):
                     self.tempo_caindo = 0
         if self._collides_with(elevador):
             self.tempo_caindo = 0
+
 class Cubo(Cubo):
 
-    def update(self):
-        self.y += min(4.9, (self.tempo_caindo_cubo/30)*self.GRAVIDADE)
-        self.tempo_caindo_cubo += 2
+    def update(self) -> None:
+        super().update()
         for lista in plataformas:
             for item in lista:
                 if self._collides_with(item):
@@ -44,10 +44,10 @@ class Cubo(Cubo):
         if self._collides_with(elevador):
             self.tempo_caindo_cubo = 0
         if self._collides_with(boy):
-            self.x += boy.velocidade_atual.x
+            self._x += (boy.velocidade_atual.x)
         if self._collides_with(girl):
-            self.x += girl.velocidade_atual.x
-            
+            self._x += (girl.velocidade_atual.x)
+
 if __name__ == '__main__':
     nivel1: Campo = Campo('./assets/images/campo-teste.png', 450, 250)
     urlOriginal: str = './assets/images/plataforma-original.png'
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     porta0: Porta = Porta("./assets/images/firegate0.png", 110, 92)
     porta1: Porta = Porta("./assets/images/watergate0.png", 210, 92)
     boy: Personagem = Personagem(115, 439, 'fogo', porta1)
-    girl: Personagem = Personagem(115, 360, 'agua', porta0)
+    girl: Personagem = Personagem(115, 363, 'agua', porta0)
     elevador: Elevador = Elevador("./assets/images/elevador.png",800, 230)
     botao0: Botao = Botao("./assets/images/botao.png",730,219)
     botao2: Botao = Botao("./assets/images/botao.png",700,125)
@@ -76,6 +76,10 @@ if __name__ == '__main__':
 
         [
             Plataforma('./assets/images/plataforma01.png', 300, 135), Plataforma(urlRampa, 430, 120), Plataforma('./assets/images/plataforma04.png', 534, 105), Plataforma(urlRampa02, 639, 105), Plataforma(urlRampa02, 665, 120), Plataforma(urlOriginal, 700, 135), Plataforma(urlOriginal, 737, 135), Plataforma(urlOriginal, 150, 135), Plataforma(urlOriginal, 115, 135), Plataforma(urlOriginal, 87, 135)
+        ],
+
+        [
+            Plataforma('./assets/images/plataforma01.png', 190, 475), Plataforma('./assets/images/plataforma01.png', 225, 475), Plataforma(urlOriginal, 470, 475), Plataforma(urlOriginal, 525, 475), Plataforma('./assets/images/plataforma01.png', 770, 475)
         ]
     ]
     diamantes: list[list[Diamante]] = [[Diamante('./assets/images/diamante-azul.png',592,450,"azul"),Diamante('./assets/images/diamante-azul.png',400,185,"azul"),Diamante('./assets/images/diamante-azul.png',509,330,"azul"),Diamante('./assets/images/diamante-azul.png',534,70,"azul")],
@@ -84,5 +88,7 @@ if __name__ == '__main__':
     poison: Obstaculo = Obstaculo('./assets/images/poison0.png', 570, 362)
     fire: Obstaculo = Obstaculo('./assets/images/fire0.png', 397, 481)
     water: Obstaculo = Obstaculo('./assets/images/water0.png', 592, 481)
+    for item in plataformas[4]:
+        item._hide()
 
     run(globals())
