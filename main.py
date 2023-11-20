@@ -1,6 +1,7 @@
 from typing import Optional
 from tupy import *
-from modules.personagem import Personagem, Porta
+from modules.personagem import *
+from modules.porta import *
 from modules.botao import Botao
 from modules.campo import Campo
 from modules.objetos import *
@@ -32,6 +33,35 @@ class Personagem(Personagem):
                     self.tempo_caindo = 0
         if self._collides_with(elevador):
             self.tempo_caindo = 0
+        
+        #Verificar se o personagem conseguiu diamantes
+        for lista in diamantes:
+            for item in lista:
+                if self._collides_with(item):
+                    if self._elemento=='fogo' and item._cor=='vermelho':
+                        self._qtd_diamantes+=1
+                        lista.remove(item)
+                        item.destroy()
+                        
+                    elif self._elemento=='agua' and item._cor=='azul':
+                        self._qtd_diamantes+=1
+                        lista.remove(item)
+                        item.destroy()
+                        
+
+                
+class Porta(Porta):
+    def update(self):
+        if self._collides_with(boy):
+            if self._tipo=='fire':
+                self._c1=True
+        elif self._collides_with(girl):
+            if self._tipo=='water':
+                self._c1=True
+        else:
+            self._c1=False
+        super().update()
+
 class Cubo(Cubo):
 
     def update(self):
@@ -53,10 +83,10 @@ if __name__ == '__main__':
     urlOriginal: str = './assets/images/plataforma-original.png'
     urlRampa: str = './assets/images/rampa.png'
     urlRampa02: str = './assets/images/rampa02.png'
-    porta0: Porta = Porta("./assets/images/firegate0.png", 110, 92)
-    porta1: Porta = Porta("./assets/images/watergate0.png", 210, 92)
-    boy: Personagem = Personagem(115, 439, 'fogo', porta1)
-    girl: Personagem = Personagem(115, 360, 'agua', porta0)
+    porta_fogo: Porta = Porta("./assets/images/firegate0.png", 110, 92,'fire')
+    porta_agua: Porta = Porta("./assets/images/watergate0.png", 210, 92,'water')
+    boy: Personagem = Personagem(115, 439, 'fogo')
+    girl: Personagem = Personagem(115, 360, 'agua')
     elevador: Elevador = Elevador("./assets/images/elevador.png",800, 230)
     botao0: Botao = Botao("./assets/images/botao.png",730,219)
     botao2: Botao = Botao("./assets/images/botao.png",700,125)
