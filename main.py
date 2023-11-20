@@ -25,14 +25,27 @@ class Elevador(BaseImage):
         
 class Personagem(Personagem):
 
+    def checaColisoes(self):
+
+        #Não utilizar o método _collides_with, mas verifica o x e y do personagem com o x e y do obstaculo
+        if self._collides_with(poison):
+            self._destroy()
+        elif self._elemento == 'fogo' and self._collides_with(water):
+            self._destroy()
+        elif self._elemento == 'agua' and self._collides_with(fire):
+            self._destroy()
+
     def update(self):
         super().update()
+
         for lista in plataformas:
             for item in lista:
                 if self._collides_with(item):
                     self.tempo_caindo = 0
+
         if self._collides_with(elevador):
             self.tempo_caindo = 0
+
         #Verificar se o personagem conseguiu diamantes
         for lista in diamantes:
             for item in lista:
@@ -46,6 +59,9 @@ class Personagem(Personagem):
                         self._qtd_diamantes+=1
                         lista.remove(item)
                         item.destroy()
+        
+        #Verificar colisão dos personagens com agua, fogo e veneno
+        self.checaColisoes()
 
 class Porta(Porta):
     
@@ -59,6 +75,7 @@ class Porta(Porta):
         else:
             self._c1=False
         super().update()   
+
 class Cubo(Cubo):
 
     def update(self) -> None:
@@ -73,6 +90,7 @@ class Cubo(Cubo):
             self._x += (boy.velocidade_atual.x)
         if self._collides_with(girl):
             self._x += (girl.velocidade_atual.x)
+
 
 if __name__ == '__main__':
     nivel1: Campo = Campo('./assets/images/campo-teste.png', 450, 250)

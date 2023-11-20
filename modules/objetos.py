@@ -17,7 +17,15 @@ class Plataforma(Image):
 class Obstaculo(BaseImage):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None, tipo: str | None = None) -> None:
         super().__init__(file, x, y)
-        self.tipo=tipo
+        self._tipo=tipo
+    
+    @property
+    def x(self):
+        return self._x
+    
+    @property
+    def y(self):
+        return self._y
 
 class Cubo(Image):
     GRAVIDADE = 5
