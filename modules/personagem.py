@@ -58,7 +58,7 @@ class Personagem(BaseImage):
         self._direcao="frente"
         self._contador=Contador(7)
         self._quadro: int=0
-        self._porta=porta
+        self._porta = None
         self._c1=False
         self._contador_porta = 0
         self._posicao_porta = 0
@@ -113,7 +113,7 @@ class Personagem(BaseImage):
         elif self._contador.esta_zerado():
             self._quadro = 1 - self._quadro
             self._contador_de_updates = 0
-        if self._y==95 and ((self._porta.x)-35)<=self._x<=((self._porta.x)+35):
+        if self._y==95 and ((self._porta._x)-35)<=self._x<=((self._porta._x)+35):
             self._c1=True
             self.atualiza_porta()
         else:
