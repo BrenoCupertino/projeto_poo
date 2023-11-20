@@ -113,14 +113,12 @@ class Personagem(BaseImage):
         elif self._contador.esta_zerado():
             self._quadro = 1 - self._quadro
             self._contador_de_updates = 0
-
         if self._y==95 and ((self._porta.x)-35)<=self._x<=((self._porta.x)+35):
             self._c1=True
             self.atualiza_porta()
         else:
             self._c1=False
             self.atualiza_porta()
-
     def atualiza_porta(self) -> None:
         if self._c1 is True:
             while True:

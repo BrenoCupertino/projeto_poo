@@ -8,7 +8,6 @@ class Diamante(BaseImage):
 class Plataforma(Image):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
         super().__init__(file, x, y)
-
     def set_x(self, x: int) -> None:
         self._x = x
 
@@ -26,17 +25,3 @@ class Cubo(Image):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
         super().__init__(file, x, y)
         self.tempo_caindo_cubo = 0
-
-    def update(self):
-        self.y += min(4.9, (self.tempo_caindo_cubo/30)*self.GRAVIDADE)
-        self.tempo_caindo_cubo += 2
-        for lista in plataformas:
-            for item in lista:
-                if self._collides_with(item):
-                    self.tempo_caindo_cubo = 0
-        if self._collides_with(elevador):
-            self.tempo_caindo_cubo = 0
-        if self._collides_with(boy):
-            self.x += boy.velocidade_atual.x
-        if self._collides_with(girl):
-            self.x += girl.velocidade_atual.x
