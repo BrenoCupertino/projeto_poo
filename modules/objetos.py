@@ -21,8 +21,11 @@ class Obstaculo(BaseImage):
         self.tipo=tipo
 
 class Cubo(Image):
-    GRAVIDADE = 2
+    GRAVIDADE = 5
 
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
         super().__init__(file, x, y)
         self.tempo_caindo_cubo = 0
+    def update(self) -> None:
+        self.y += min(10, (self.tempo_caindo_cubo/30) * self.GRAVIDADE)
+        self.tempo_caindo_cubo += 2
