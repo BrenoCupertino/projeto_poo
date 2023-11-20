@@ -1,6 +1,7 @@
 from typing import Optional
 from tupy import *
-from modules.personagem import Personagem, Porta
+from modules.personagem import Personagem
+from modules.porta import Porta
 from modules.botao import Botao
 from modules.campo import Campo
 from modules.objetos import *
