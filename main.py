@@ -86,7 +86,7 @@ if __name__ == '__main__':
     porta_fogo: Porta = Porta("./assets/images/firegate0.png", 110, 92,'fire')
     porta_agua: Porta = Porta("./assets/images/watergate0.png", 210, 92,'water')
     boy: Personagem = Personagem(115, 439, 'fogo')
-    girl: Personagem = Personagem(115, 360, 'agua')
+    girl: Personagem = Personagem(115, 363, 'agua')
     elevador: Elevador = Elevador("./assets/images/elevador.png",800, 230)
     botao0: Botao = Botao("./assets/images/botao.png",730,219)
     botao2: Botao = Botao("./assets/images/botao.png",700,125)
@@ -114,5 +114,6 @@ if __name__ == '__main__':
     poison: Obstaculo = Obstaculo('./assets/images/poison0.png', 570, 362)
     fire: Obstaculo = Obstaculo('./assets/images/fire0.png', 397, 481)
     water: Obstaculo = Obstaculo('./assets/images/water0.png', 592, 481)
-
+    for item in plataformas[4]:
+        item._hide()
     run(globals())
