@@ -43,7 +43,7 @@ class Personagem(BaseImage):
     VELOCIDADE = 10
     GRAVIDADE = 5
 
-    def __init__(self, x: int | None = None, y: int | None = None, elemento: str | None = None, porta: str | None = None) -> None:
+    def __init__(self, x: int | None = None, y: int | None = None, elemento: str | None = None) -> None:
         self._elemento = elemento
         if self._elemento == "fogo":
             self._file = './assets/images/boyfrente0.png'
