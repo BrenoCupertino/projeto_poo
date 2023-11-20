@@ -32,7 +32,32 @@ class Personagem(Personagem):
                     self.tempo_caindo = 0
         if self._collides_with(elevador):
             self.tempo_caindo = 0
+        #Verificar se o personagem conseguiu diamantes
+        for lista in diamantes:
+            for item in lista:
+                if self._collides_with(item):
+                    if self._elemento=='fogo' and item._cor=='vermelho':
+                        self._qtd_diamantes+=1
+                        lista.remove(item)
+                        item.destroy()
+                        
+                    elif self._elemento=='agua' and item._cor=='azul':
+                        self._qtd_diamantes+=1
+                        lista.remove(item)
+                        item.destroy()
 
+class Porta(Porta):
+    
+    def update(self):
+        if self._collides_with(boy):
+            if self._tipo=='fire':
+                self._c1=True
+        elif self._collides_with(girl):
+            if self._tipo=='water':
+                self._c1=True
+        else:
+            self._c1=False
+        super().update()   
 class Cubo(Cubo):
 
     def update(self) -> None:
