@@ -58,10 +58,6 @@ class Personagem(BaseImage):
         self._direcao="frente"
         self._contador=Contador(7)
         self._quadro: int=0
-        self._porta = None
-        self._c1=False
-        self._contador_porta = 0
-        self._posicao_porta = 0
         self.velocidade_atual = Vetor(0,0)
         self.tempo_caindo = 0
 
@@ -113,36 +109,8 @@ class Personagem(BaseImage):
         elif self._contador.esta_zerado():
             self._quadro = 1 - self._quadro
             self._contador_de_updates = 0
-        if self._y==95 and ((self._porta._x)-35)<=self._x<=((self._porta._x)+35):
-            self._c1=True
-            self.atualiza_porta()
-        else:
-            self._c1=False
-            self.atualiza_porta()
-    def atualiza_porta(self) -> None:
-        if self._c1 is True:
-            while True:
-                self._contador_porta+=1
-                if self._contador_porta._contador%10==0:
-                    if self._posicao_porta!=6:
-                        self._posicao_porta+=1
-                self._porta._file=f'./assets/images/{self._tipo}gate{self._posicao_porta}.png'
-                if self._contador_porta==60:
-                    break
-                if self._c1 is False:
-                    break
-        else:
-            if self._contador_porta!=0:
-                while True:
-                    self._contador_porta-=1
-                    if self._contador_porta._contador%10==0:
-                        if self._posicao_porta!=0:
-                            self._posicao_porta-=1
-                    self._porta._file=f'./assets/images/{self._tipo}gate{self._posicao_porta}.png'
-                    if self._contador_porta==0:
-                        break
-                    if self._c1 is True:
-                        break
+       
+
                         
     def atualiza_imagem(self) -> None:
         nome = self._direcao.value
