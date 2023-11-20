@@ -53,6 +53,7 @@ class Personagem(BaseImage):
             self._file = './assets/imagens/girlfrente0.png'
             self._tipo = 'girl'
             self._l1 = ["w", "a", "d"]
+        self._qtd_diamantes=0
         self._x = x
         self._y = y
         self._direcao="frente"
