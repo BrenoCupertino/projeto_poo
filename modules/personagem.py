@@ -41,7 +41,7 @@ class Porta(BaseImage):
         
 class Personagem(BaseImage):
     VELOCIDADE = 10
-    GRAVIDADE = 2
+    GRAVIDADE = 5
 
     def __init__(self, x: int | None = None, y: int | None = None, elemento: str | None = None, porta: str | None = None) -> None:
         self._elemento = elemento
@@ -96,7 +96,7 @@ class Personagem(BaseImage):
     
     def gravidade(self) -> None:
 
-        self.atualiza_posicao(Vetor(0, min(4.9, (self.tempo_caindo/30) * self.GRAVIDADE)))
+        self.atualiza_posicao(Vetor(0, min(10, (self.tempo_caindo/30) * self.GRAVIDADE)))
         self.tempo_caindo += 2
     
 
