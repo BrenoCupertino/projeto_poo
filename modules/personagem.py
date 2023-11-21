@@ -1,5 +1,6 @@
 from tupy import *
 from enum import Enum
+from modules.objetos import Vazio
 
 class Vetor:
     def __init__(self, x, y):
@@ -53,6 +54,7 @@ class Personagem(BaseImage):
             self._file = './assets/imagens/girlfrente0.png'
             self._tipo = 'girl'
             self._l1 = ["w", "a", "d"]
+        self._campo=Vazio('./assets/images/imagem-vazia0.png',self._x,self._y)
         self._qtd_diamantes=0
         self._x = x
         self._y = y
@@ -130,3 +132,5 @@ class Personagem(BaseImage):
             self._y = 520
         else:
             self._y += velocidade.y
+        self._campo._x=self._x
+        self._campo._y=self._y

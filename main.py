@@ -1,6 +1,6 @@
 from typing import Optional
 from tupy import *
-from modules.personagem import Personagem
+from modules.personagem import *
 from modules.porta import Porta
 from modules.botao import Botao
 from modules.campo import Campo
@@ -29,14 +29,14 @@ class Personagem(Personagem):
         super().update()
         for lista in plataformas:
             for item in lista:
-                if self._collides_with(item):
+                if self._campo._collides_with(item):
                     self.tempo_caindo = 0
-        if self._collides_with(elevador):
+        if self._campo._collides_with(elevador):
             self.tempo_caindo = 0
         #Verificar se o personagem conseguiu diamantes
         for lista in diamantes:
             for item in lista:
-                if self._collides_with(item):
+                if self._campo._collides_with(item):
                     if self._elemento=='fogo' and item._cor=='vermelho':
                         self._qtd_diamantes+=1
                         lista.remove(item)
@@ -50,10 +50,10 @@ class Personagem(Personagem):
 class Porta(Porta):
     
     def update(self):
-        if self._collides_with(boy):
+        if self._collides_with(boy._campo):
             if self._tipo=='fire':
                 self._c1=True
-        elif self._collides_with(girl):
+        elif self._collides_with(girl._campo):
             if self._tipo=='water':
                 self._c1=True
         else:
@@ -65,13 +65,13 @@ class Cubo(Cubo):
         super().update()
         for lista in plataformas:
             for item in lista:
-                if self._collides_with(item):
+                if self._campo._collides_with(item):
                     self.tempo_caindo_cubo = 0
-        if self._collides_with(elevador):
+        if self._campo._collides_with(elevador):
             self.tempo_caindo_cubo = 0
-        if self._collides_with(boy):
+        if self._campo._collides_with(boy._campo):
             self._x += (boy.velocidade_atual.x)
-        if self._collides_with(girl):
+        if self._campo._collides_with(girl._campo):
             self._x += (girl.velocidade_atual.x)
 
 if __name__ == '__main__':
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     cubo: Cubo = Cubo('./assets/images/cubo.png',200,300)
     plataformas: list[list[Plataforma]] = [
         [
-        Plataforma('./assets/images/plataforma01.png', 190, 400), Plataforma(urlOriginal, 815, 410), Plataforma(urlRampa, 776, 410)
+        Plataforma('./assets/images/plataforma1.1.png',211,481), Plataforma('./assets/images/plataforma1.2.png',495,481), Plataforma('./assets/images/plataforma1.3.png',733,481),Plataforma('./assets/images/plataforma01.png', 190, 400), Plataforma(urlOriginal, 815, 410), Plataforma(urlRampa, 776, 410)
         ], 
 
         [
