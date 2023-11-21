@@ -27,12 +27,14 @@ class Personagem(Personagem):
 
     def update(self):
         super().update()
+
         for lista in plataformas:
             for item in lista:
                 if self._campo._collides_with(item):
                     self.tempo_caindo = 0
-        if self._campo._collides_with(elevador):
+        if self._collides_with(elevador):
             self.tempo_caindo = 0
+
         #Verificar se o personagem conseguiu diamantes
         for lista in diamantes:
             for item in lista:
@@ -59,6 +61,7 @@ class Porta(Porta):
         else:
             self._c1=False
         super().update()   
+
 class Cubo(Cubo):
 
     def update(self) -> None:
@@ -73,6 +76,7 @@ class Cubo(Cubo):
             self._x += (boy.velocidade_atual.x)
         if self._campo._collides_with(girl._campo):
             self._x += (girl.velocidade_atual.x)
+
 
 if __name__ == '__main__':
     nivel1: Campo = Campo('./assets/images/campo-teste.png', 450, 250)
