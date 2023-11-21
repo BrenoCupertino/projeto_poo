@@ -25,6 +25,17 @@ class Elevador(BaseImage):
         
 class Personagem(Personagem):
 
+    def checaColisoes(self):
+
+        if (self._y <= 340 and self._y >= 300)  and (self._x >= 540 and self._x <= 600):
+            self._destroy()
+        elif self._elemento == 'fogo':
+            if (self._y <= 481 and self._y >= 430) and (self._x >= 565 and self._x <= 618):
+                self._destroy()
+        elif self._elemento == 'agua':
+            if (self._y <= 481 and self._y >= 430) and (self._x >= 370 and self._x <= 420):
+                self._destroy()
+
     def update(self):
         super().update()
 
@@ -48,6 +59,8 @@ class Personagem(Personagem):
                         self._qtd_diamantes+=1
                         lista.remove(item)
                         item.destroy()
+        
+        self.checaColisoes()
 
 class Porta(Porta):
     
