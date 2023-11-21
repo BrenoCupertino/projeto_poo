@@ -27,13 +27,14 @@ class Personagem(Personagem):
 
     def checaColisoes(self):
 
-        #Não utilizar o método _collides_with, mas verifica o x e y do personagem com o x e y do obstaculo
-        if self._collides_with(poison):
+        if (self._y <= 340 and self._y >= 300)  and (self._x >= 540 and self._x <= 600):
             self._destroy()
-        elif self._elemento == 'fogo' and self._collides_with(water):
-            self._destroy()
-        elif self._elemento == 'agua' and self._collides_with(fire):
-            self._destroy()
+        elif self._elemento == 'fogo':
+            if (self._y <= 481 and self._y >= 430) and (self._x >= 565 and self._x <= 618):
+                self._destroy()
+        elif self._elemento == 'agua':
+            if (self._y <= 481 and self._y >= 430) and (self._x >= 370 and self._x <= 420):
+                self._destroy()
 
     def update(self):
         super().update()
@@ -60,7 +61,7 @@ class Personagem(Personagem):
                         lista.remove(item)
                         item.destroy()
         
-        #Verificar colisão dos personagens com agua, fogo e veneno
+        #Verifica colisão dos personagens com agua, fogo e veneno!
         self.checaColisoes()
 
 class Porta(Porta):
