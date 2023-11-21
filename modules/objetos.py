@@ -25,6 +25,12 @@ class Cubo(Image):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
         super().__init__(file, x, y)
         self.tempo_caindo_cubo = 0
+        self._campo=Vazio('./assets/images/imagem-vazia1.png',self.x,self.y)
     def update(self) -> None:
         self.y += min(10, (self.tempo_caindo_cubo/30) * self.GRAVIDADE)
         self.tempo_caindo_cubo += 2
+        self._campo._x=self._x
+        self._campo._y=self._y
+class Vazio(Image):
+    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
+        super().__init__(file, x, y)
