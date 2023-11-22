@@ -40,7 +40,7 @@ class Porta(BaseImage):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
         super().__init__(file, x, y)
         
-class Personagem(BaseImage):
+class Personagem(Image):
     VELOCIDADE = 10
     GRAVIDADE = 5
 
@@ -56,21 +56,14 @@ class Personagem(BaseImage):
             self._l1 = ["w", "a", "d"]
         self._campo=Vazio('./assets/images/imagem-vazia0.png',self._x,self._y)
         self._qtd_diamantes=0
-        self._x = x
-        self._y = y
+        self.x = x
+        self.y = y
         self._direcao="frente"
         self._contador=Contador(7)
         self._quadro: int=0
         self.velocidade_atual = Vetor(0,0)
         self.tempo_caindo = 0
 
-    @property
-    def x(self):
-        return self._x
-    
-    @property
-    def y(self):
-        return self._y
     
     def obtem_velocidade(self) -> Vetor:
         velx = 0

@@ -2,7 +2,6 @@ from typing import Optional
 from tupy import *
 from modules.personagem import *
 from modules.porta import Porta
-from modules.botao import Botao
 from modules.campo import Campo
 from modules.objetos import *
 
@@ -19,20 +18,64 @@ from modules.objetos import *
             self._c1=True 
         super().update()"""
 
-class Elevador(BaseImage):
-    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
-        super().__init__(file, x, y)
+class Campo(Campo):
+    def update(self):
+        if porta_fogo._file=='./assets/images/firegate6.png' and porta_agua._file=='./assets/images/watergate6.png':
+            toast("Fim de jogo",10000)
+            boy.destroy() #Pra travar o jogo apos terminar
+            girl.destroy()
+class Elevador(Elevador):
+    def update(self):
+        if boy._campo._collides_with(botao_baixo) or girl._campo._collides_with(botao_baixo._campo):
+            if self._y>135:
+                self._y-=5
+            self._pilha=1
+        elif boy._campo._collides_with(botao_cima) or girl._campo._collides_with(botao_cima._campo):
+            if self._y<230:
+                self._y+=5
+            self._pilha=2
+        elif self._pilha==1:
+            if self._y<230:
+                self._y+=5
+        elif self._pilha==2:
+            if self._y>135:
+                self._y-=5
+
+
+class Botao(Botao):
+    def update(self):
+        if boy._campo._collides_with(self._campo) or girl._campo._collides_with(self._campo):
+            self.file='./assets/images/imagem-vazia2.png'
+        else:
+            self.file='./assets/images/botao.png'
+
         
 class Personagem(Personagem):
 
+    def checaColisoes(self):
+
+        if (self._y <= 340 and self._y >= 300)  and (self._x >= 540 and self._x <= 600):
+            self._destroy()
+            toast("Fim de jogo",5000)
+        elif self._elemento == 'fogo':
+            if (self._y <= 481 and self._y >= 430) and (self._x >= 565 and self._x <= 618):
+                self._destroy()
+                toast("Fim de jogo",5000)
+        elif self._elemento == 'agua':
+            if (self._y <= 481 and self._y >= 430) and (self._x >= 370 and self._x <= 420):
+                self._destroy()
+                toast("Fim de jogo",5000)
+
     def update(self):
         super().update()
+        if self._campo._collides_with(elevador):
+            self.y=(elevador._y)-40
+            #self.tempo_caindo = 0
         for lista in plataformas:
             for item in lista:
                 if self._campo._collides_with(item):
                     self.tempo_caindo = 0
-        if self._campo._collides_with(elevador):
-            self.tempo_caindo = 0
+       
         #Verificar se o personagem conseguiu diamantes
         for lista in diamantes:
             for item in lista:
@@ -46,6 +89,8 @@ class Personagem(Personagem):
                         self._qtd_diamantes+=1
                         lista.remove(item)
                         item.destroy()
+                    
+        self.checaColisoes()
 
 class Porta(Porta):
     
@@ -84,8 +129,8 @@ if __name__ == '__main__':
     boy: Personagem = Personagem(115, 439, 'fogo')
     girl: Personagem = Personagem(115, 363, 'agua')
     elevador: Elevador = Elevador("./assets/images/elevador.png",800, 230)
-    botao0: Botao = Botao("./assets/images/botao.png",730,219)
-    botao2: Botao = Botao("./assets/images/botao.png",700,125)
+    botao_baixo: Botao = Botao("./assets/images/botao.png",730,219)
+    botao_cima: Botao = Botao("./assets/images/botao.png",700,125)
     cubo: Cubo = Cubo('./assets/images/cubo.png',200,300)
     plataformas: list[list[Plataforma]] = [
         [

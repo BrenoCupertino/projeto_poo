@@ -4,6 +4,16 @@ class Diamante(BaseImage):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None, cor: str | None = None) -> None:
         super().__init__(file, x,y)
         self._cor=cor
+    
+class Botao(Image):
+    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None, cor: str | None = None) -> None:
+        super().__init__(file, x,y)
+        self._campo=Vazio('./assets/images/imagem-vazia2.png',self.x,self.y)
+
+class Elevador(BaseImage):
+    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
+        super().__init__(file, x, y)
+        self._pilha=0
 
 class Plataforma(Image):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
