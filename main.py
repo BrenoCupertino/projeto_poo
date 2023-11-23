@@ -6,74 +6,33 @@ from modules.botao import Botao
 from modules.campo import Campo
 from modules.objetos import *
 
-"""class botao1(Botao):
-    def __init__(self,x,y,boy,girl):
-        super().__init__(x,y)
-        self._boy=boy
-        self._girl=girl
-        
-    def update(self):
-        if self._collides_with(self._boy):
-            self._c1=True
-        elif self._collides_with(self._girl):
-            self._c1=True 
-        super().update()"""
-
 class Elevador(BaseImage):
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
         super().__init__(file, x, y)
         
 class Personagem(Personagem):
 
-    def checaColisoes(self):
-
-        if (self._y <= 340 and self._y >= 300)  and (self._x >= 540 and self._x <= 600):
-            self._destroy()
-        elif self._elemento == 'fogo':
-            if (self._y <= 481 and self._y >= 430) and (self._x >= 565 and self._x <= 618):
-                self._destroy()
-        elif self._elemento == 'agua':
-            if (self._y <= 481 and self._y >= 430) and (self._x >= 370 and self._x <= 420):
-                self._destroy()
-
     def update(self):
+
         super().update()
-
-        for lista in plataformas:
-            for item in lista:
-                if self._campo._collides_with(item):
-                    self.tempo_caindo = 0
-        if self._collides_with(elevador):
-            self.tempo_caindo = 0
-
-        #Verificar se o personagem conseguiu diamantes
-        for lista in diamantes:
-            for item in lista:
-                if self._campo._collides_with(item):
-                    if self._elemento=='fogo' and item._cor=='vermelho':
-                        self._qtd_diamantes+=1
-                        lista.remove(item)
-                        item.destroy()
-                        
-                    elif self._elemento=='agua' and item._cor=='azul':
-                        self._qtd_diamantes+=1
-                        lista.remove(item)
-                        item.destroy()
-        
+        self.colisao_plataformas(plataformas)
+        self.colisao_elevador(elevador)
+        self.colisao_diamantes(diamantes)
         self.checaColisoes()
 
 class Porta(Porta):
     
     def update(self):
-        if self._collides_with(boy._campo):
-            if self._tipo=='fire':
-                self._c1=True
-        elif self._collides_with(girl._campo):
-            if self._tipo=='water':
-                self._c1=True
+
+        super().update()
+        if self._collides_with(boy._campo) and self._tipo == boy._elemento:
+            self._c1 = True
+        elif self._collides_with(girl._campo) and self._tipo == girl._elemento:
+            self._c1 = True
         else:
-            self._c1=False
-        super().update()   
+            self._c1 = False
+        
+        
 
 class Cubo(Cubo):
 
@@ -92,14 +51,15 @@ class Cubo(Cubo):
 
 
 if __name__ == '__main__':
+
     nivel1: Campo = Campo('./assets/images/campo-teste.png', 450, 250)
     urlOriginal: str = './assets/images/plataforma-original.png'
     urlRampa: str = './assets/images/rampa.png'
     urlRampa02: str = './assets/images/rampa02.png'
     porta_fogo: Porta = Porta("./assets/images/firegate0.png", 110, 92, 'fire')
     porta_agua: Porta = Porta("./assets/images/watergate0.png", 210, 92, 'water')
-    boy: Personagem = Personagem(115, 439, 'fogo')
-    girl: Personagem = Personagem(115, 363, 'agua')
+    boy: Personagem = Personagem(115, 439, 'fire')
+    girl: Personagem = Personagem(115, 363, 'water')
     elevador: Elevador = Elevador("./assets/images/elevador.png",800, 230)
     botao0: Botao = Botao("./assets/images/botao.png",730,219)
     botao2: Botao = Botao("./assets/images/botao.png",700,125)

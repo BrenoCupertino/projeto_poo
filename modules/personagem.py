@@ -46,15 +46,15 @@ class Personagem(BaseImage):
 
     def __init__(self, x: int | None = None, y: int | None = None, elemento: str | None = None) -> None:
         self._elemento = elemento
-        if self._elemento == "fogo":
+        if self._elemento == "fire":
             self._file = './assets/images/boyfrente0.png'
             self._tipo = 'boy'
             self._l1 = ["Up","Left","Right"]
-        elif self._elemento == "agua":
+        elif self._elemento == "water":
             self._file = './assets/imagens/girlfrente0.png'
             self._tipo = 'girl'
             self._l1 = ["w", "a", "d"]
-        self._campo=Vazio('./assets/images/imagem-vazia0.png',self._x,self._y)
+        self._campo=Vazio('./assets/images/imagem-vazia0.png',self._x, self._y)
         self._qtd_diamantes=0
         self._x = x
         self._y = y
@@ -97,23 +97,6 @@ class Personagem(BaseImage):
 
         self.atualiza_posicao(Vetor(0, min(10, (self.tempo_caindo/30) * self.GRAVIDADE)))
         self.tempo_caindo += 2
-    
-
-    def update(self) -> None:
-        self._contador.incrementa()
-        self.velocidade_atual = self.obtem_velocidade()
-        self._direcao = self.obtem_direcao(self.velocidade_atual)
-        self.atualiza_posicao(self.velocidade_atual)
-        self.atualiza_imagem()
-        self.gravidade()
-
-        if self.velocidade_atual == Vetor.ZERO:
-            self._quadro = 0
-        elif self._contador.esta_zerado():
-            self._quadro = 1 - self._quadro
-            self._contador_de_updates = 0
-       
-
                         
     def atualiza_imagem(self) -> None:
         nome = self._direcao.value
@@ -134,3 +117,57 @@ class Personagem(BaseImage):
             self._y += velocidade.y
         self._campo._x=self._x
         self._campo._y=self._y
+    
+    def checaColisoes(self):
+
+        if (self._y <= 340 and self._y >= 300)  and (self._x >= 540 and self._x <= 600):
+            self._destroy()
+        elif self._elemento == 'fogo':
+            if (self._y <= 481 and self._y >= 430) and (self._x >= 565 and self._x <= 618):
+                self._destroy()
+        elif self._elemento == 'agua':
+            if (self._y <= 481 and self._y >= 430) and (self._x >= 370 and self._x <= 420):
+                self._destroy()
+
+    def colisao_plataformas(self, plataformas: list) -> None:
+
+        for lista in plataformas:
+            for item in lista:
+                if self._campo._collides_with(item):
+                    self.tempo_caindo = 0
+    
+    def colisao_elevador(self, elevador: BaseImage) -> None:
+
+        if self._collides_with(elevador):
+            self.tempo_caindo = 0
+    
+    def colisao_diamantes(self, diamantes: list) -> None:
+
+        #Verificar se o personagem conseguiu diamantes
+        for lista in diamantes:
+            for item in lista:
+                if self._campo._collides_with(item):
+                    if self._elemento=='fogo' and item._cor=='vermelho':
+                        self._qtd_diamantes+=1
+                        lista.remove(item)
+                        item.destroy()
+                        
+                    elif self._elemento=='agua' and item._cor=='azul':
+                        self._qtd_diamantes+=1
+                        lista.remove(item)
+                        item.destroy()
+    
+    def update(self) -> None:
+        self._contador.incrementa()
+        self.velocidade_atual = self.obtem_velocidade()
+        self._direcao = self.obtem_direcao(self.velocidade_atual)
+        self.atualiza_posicao(self.velocidade_atual)
+        self.atualiza_imagem()
+        self.gravidade()
+        self.checaColisoes()
+
+        if self.velocidade_atual == Vetor.ZERO:
+            self._quadro = 0
+        elif self._contador.esta_zerado():
+            self._quadro = 1 - self._quadro
+            self._contador_de_updates = 0
