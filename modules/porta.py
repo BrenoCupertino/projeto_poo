@@ -10,13 +10,6 @@ class Porta(BaseImage):
         self._c1 = False
         self._contador_porta = 0
         self._posicao_porta = 0
-    
-    def colisao_personagem(self, personagem: Personagem) -> None:
-
-        if self._collides_with(personagem._campo) and self._tipo == personagem._elemento:
-            self._c1=True
-        else:
-            self._c1=False
 
     def update(self) -> None:
         

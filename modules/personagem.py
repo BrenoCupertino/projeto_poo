@@ -35,10 +35,6 @@ class Direcao(Enum):
     ESQUERDA = "esquerda"
     DIREITA = "direita"
     NULO= "frente"
-
-class Porta(BaseImage):
-    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
-        super().__init__(file, x, y)
         
 class Personagem(BaseImage):
     VELOCIDADE = 10
@@ -73,6 +69,7 @@ class Personagem(BaseImage):
         return self._y
     
     def obtem_velocidade(self) -> Vetor:
+        
         velx = 0
         vely = 0
         if keyboard.is_key_down(self._l1[0]):
