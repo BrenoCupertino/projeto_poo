@@ -18,7 +18,7 @@ class Personagem(Personagem):
         self.colisao_plataformas(plataformas)
         self.colisao_elevador(elevador)
         self.colisao_diamantes(diamantes)
-        self.checaColisoes()
+        
 
 class Porta(Porta):
     

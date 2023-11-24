@@ -50,15 +50,18 @@ class Personagem(BaseImage):
             self._file = './assets/imagens/girlfrente0.png'
             self._tipo = 'girl'
             self._l1 = ["w", "a", "d"]
-        self._campo=Vazio('./assets/images/imagem-vazia0.png',self._x, self._y)
-        self._qtd_diamantes=0
+        self._campo = Vazio('./assets/images/imagem-vazia0.png',self._x, self._y)
+        self._qtd_diamantes = 0
         self._x = x
         self._y = y
         self._direcao="frente"
         self._contador=Contador(7)
         self._quadro: int=0
-        self.velocidade_atual = Vetor(0,0)
         self.tempo_caindo = 0
+        self.velx = 0
+        self.vely = 0
+        self.velocidade_atual = Vetor(self.velx, self.vely)
+        self._contador_de_pulos = 0
 
     @property
     def x(self):
@@ -70,15 +73,18 @@ class Personagem(BaseImage):
     
     def obtem_velocidade(self) -> Vetor:
         
-        velx = 0
-        vely = 0
+        self.velx = 0
+        self.vely = 0
         if keyboard.is_key_down(self._l1[0]):
-            vely -= Personagem.VELOCIDADE
+            if self._contador_de_pulos < 7:
+                self.vely -= Personagem.VELOCIDADE
+                self._contador_de_pulos += 1
         if keyboard.is_key_down(self._l1[1]):
-            velx -= Personagem.VELOCIDADE
+            self.velx -= Personagem.VELOCIDADE
         if keyboard.is_key_down(self._l1[2]):
-            velx += Personagem.VELOCIDADE
-        return Vetor(velx,vely)
+            self.velx += Personagem.VELOCIDADE
+        self.velocidade_atual.x = self.velx
+        self.velocidade_atual.y = self.vely
     
     def obtem_direcao(self, vel: Vetor) -> Direcao:
         if vel.y < 0:
@@ -112,8 +118,8 @@ class Personagem(BaseImage):
             self._y = 520
         else:
             self._y += velocidade.y
-        self._campo._x=self._x
-        self._campo._y=self._y
+        self._campo._x = self._x
+        self._campo._y = self._y + 5
     
     def checaColisoes(self):
 
@@ -130,8 +136,13 @@ class Personagem(BaseImage):
 
         for lista in plataformas:
             for item in lista:
-                if self._campo._collides_with(item):
+                if self._campo._collides_with(item) and self._y < item._y:
+                    self._y = item._y - self._campo._height*0.75
+                    self._campo._y = self._y
                     self.tempo_caindo = 0
+                    self._contador_de_pulos = 0
+                elif self._campo._collides_with(item) and self._y > item._y:
+                    self.atualiza_posicao(Vetor(0, -self.vely))
     
     def colisao_elevador(self, elevador: BaseImage) -> None:
 
@@ -144,19 +155,19 @@ class Personagem(BaseImage):
         for lista in diamantes:
             for item in lista:
                 if self._campo._collides_with(item):
-                    if self._elemento=='fogo' and item._cor=='vermelho':
+                    if self._elemento=='fire' and item._cor=='vermelho':
                         self._qtd_diamantes+=1
                         lista.remove(item)
                         item.destroy()
                         
-                    elif self._elemento=='agua' and item._cor=='azul':
+                    elif self._elemento=='water' and item._cor=='azul':
                         self._qtd_diamantes+=1
                         lista.remove(item)
                         item.destroy()
     
     def update(self) -> None:
         self._contador.incrementa()
-        self.velocidade_atual = self.obtem_velocidade()
+        self.obtem_velocidade()
         self._direcao = self.obtem_direcao(self.velocidade_atual)
         self.atualiza_posicao(self.velocidade_atual)
         self.atualiza_imagem()
@@ -167,4 +178,3 @@ class Personagem(BaseImage):
             self._quadro = 0
         elif self._contador.esta_zerado():
             self._quadro = 1 - self._quadro
-            self._contador_de_updates = 0
