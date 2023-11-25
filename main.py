@@ -13,7 +13,10 @@ class Personagem(Personagem):
         self.colisao_plataformas(plataformas)
         self.colisao_elevador(elevador)
         self.colisao_diamantes(diamantes)
-        #self.colisao_cubo(cubo)
+        self.colisao_cubo(cubo)
+        self.colisao_obstaculo(poison)
+        self.colisao_obstaculo(fire)
+        self.colisao_obstaculo(water)
         
 
 class Porta(Porta):
@@ -94,10 +97,10 @@ if __name__ == '__main__':
     porta_agua: Porta = Porta("./assets/images/watergate0.png", 210, 92, 'water')
     boy: Personagem = Personagem(115, 439, 'fire')
     girl: Personagem = Personagem(115, 363, 'water')
-    elevador: Elevador = Elevador("./assets/images/elevador.png",800, 230)
-    botao_baixo: Botao = Botao("./assets/images/botao.png",730,219, elevador)
-    botao_cima: Botao = Botao("./assets/images/botao.png",700,125, elevador)
-    #cubo: Cubo = Cubo('./assets/images/cubo.png',200,300)
+    elevador: Elevador = Elevador("./assets/images/elevador.png", 800, 230)
+    botao_baixo: Botao = Botao("./assets/images/botao.png", 730, 219, elevador)
+    botao_cima: Botao = Botao("./assets/images/botao.png", 700, 125, elevador)
+    cubo: Cubo = Cubo('./assets/images/cubo.png', 200, 300)
     plataformas: list[list[Plataforma]] = [
         [
         Plataforma('./assets/images/plataforma1.1.png',211,481), Plataforma('./assets/images/plataforma1.2.png',495,481), Plataforma('./assets/images/plataforma1.3.png',733,481),Plataforma('./assets/images/plataforma01.png', 190, 400), Plataforma(urlOriginal, 815, 410), Plataforma(urlRampa, 776, 410)
@@ -116,15 +119,15 @@ if __name__ == '__main__':
         ],
 
         [
-            Plataforma('./assets/images/plataforma01.png', 190, 475), Plataforma('./assets/images/plataforma01.png', 225, 475), Plataforma(urlOriginal, 470, 475), Plataforma(urlOriginal, 525, 475), Plataforma('./assets/images/plataforma01.png', 770, 475)
+            Plataforma('./assets/images/plataforma01.png', 190, 475), Plataforma('./assets/images/plataforma01.png', 225, 475), Plataforma(urlOriginal, 470, 475), Plataforma(urlOriginal, 525, 475), Plataforma('./assets/images/plataforma01.png', 770, 475), Plataforma(urlOriginal, 570, 366), Plataforma('./assets/images/plataforma01.png', 500, 500)
         ]
     ]
     diamantes: list[list[Diamante]] = [[Diamante('./assets/images/diamante-azul.png',592,450,"azul"),Diamante('./assets/images/diamante-azul.png',400,185,"azul"),Diamante('./assets/images/diamante-azul.png',509,330,"azul"),Diamante('./assets/images/diamante-azul.png',534,70,"azul")],
         [Diamante('./assets/images/diamante-vermelho.png',397,450,"vermelho"), Diamante('./assets/images/diamante-vermelho.png',210,200,"vermelho"), Diamante('./assets/images/diamante-vermelho.png',815,385,"vermelho"), Diamante('./assets/images/diamante-vermelho.png',650,200,"vermelho")]                               
         ]
-    poison: Obstaculo = Obstaculo('./assets/images/poison0.png', 570, 362)
-    fire: Obstaculo = Obstaculo('./assets/images/fire0.png', 397, 481)
-    water: Obstaculo = Obstaculo('./assets/images/water0.png', 592, 481)
+    poison: Obstaculo = Obstaculo('./assets/images/poison0.png', 570, 362, "poison")
+    fire: Obstaculo = Obstaculo('./assets/images/fire0.png', 397, 481, "fire")
+    water: Obstaculo = Obstaculo('./assets/images/water0.png', 592, 481, "water")
     for item in plataformas[4]:
         item._hide()
 

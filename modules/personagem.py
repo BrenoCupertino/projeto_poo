@@ -121,15 +121,17 @@ class Personagem(BaseImage):
         self._campo._x = self._x
         self._campo._y = self._y + 5
     
-    def checaColisoes(self):
+    def colisao_obstaculo(self, obstaculo: Obstaculo) -> None:
 
-        if (self._y <= 340 and self._y >= 300)  and (self._x >= 540 and self._x <= 600):
-            self._destroy()
-        elif self._elemento == 'fire':
-            if (self._y <= 481 and self._y >= 430) and (self._x >= 565 and self._x <= 618):
+        if self._campo._collides_with(obstaculo):
+            if obstaculo._tipo == "poison" and self._campo._y + self._campo._height*0.5 > obstaculo._y - obstaculo._height*0.5:
+                    toast("Fim de jogo",10000)
+                    self._destroy()
+            elif self._elemento == 'fire' and obstaculo._tipo == "water":
+                toast("Fim de jogo",10000)
                 self._destroy()
-        elif self._elemento == 'water':
-            if (self._y <= 481 and self._y >= 430) and (self._x >= 370 and self._x <= 420):
+            elif self._elemento == 'water' and obstaculo._tipo == "fire":
+                toast("Fim de jogo",10000)
                 self._destroy()
 
     def colisao_plataformas(self, plataformas: list) -> None:
@@ -172,13 +174,12 @@ class Personagem(BaseImage):
     
     def colisao_cubo(self, cubo: Cubo) -> None:
 
-        if self._campo._collides_with(cubo) and self._y < cubo.y:
-            self._y = cubo.y - self._campo._height*0.75
+        if self._campo._collides_with(cubo._campo) and self._campo._y < cubo._campo._y:
+            self._y = cubo._campo._y*0.75
             self._campo._y = self._y
             self.tempo_caindo = 0
             self._contador_de_pulos = 0
-        elif self._campo._collides_with(cubo) and self._y > cubo.y:
-            self.atualiza_posicao(Vetor(0, -self.vely))
+            
             
     def update(self) -> None:
         self._contador.incrementa()
@@ -187,7 +188,6 @@ class Personagem(BaseImage):
         self.atualiza_posicao(self.velocidade_atual)
         self.atualiza_imagem()
         self.gravidade()
-        self.checaColisoes()
 
         if self.velocidade_atual == Vetor.ZERO:
             self._quadro = 0
