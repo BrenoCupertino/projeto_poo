@@ -30,8 +30,6 @@ class Porta(Porta):
             self._c1 = True
         else:
             self._c1 = False
-        
-        
 
 class Cubo(Cubo):
 
@@ -44,10 +42,18 @@ class Cubo(Cubo):
                     self.tempo_caindo_cubo = 0
         if self._campo._collides_with(elevador):
             self.tempo_caindo_cubo = 0
-        if self._campo._collides_with(boy._campo):
-            self._x += (boy.velocidade_atual.x)
-        if self._campo._collides_with(girl._campo):
-            self._x += (girl.velocidade_atual.x)
+        if self._campo._collides_with(boy._campo) and self._campo.y - (self._campo._height*0.5) < boy._campo._y:
+            if self.x > 820:
+                self.x -= boy.velx
+            elif self.x < 85:
+                self.x -= boy.velx
+            self._x += (boy.velx)
+        if self._campo._collides_with(girl._campo) and self._campo.y - (self._campo._height*0.5) < girl._campo._y:
+            if self.x > 820:
+                self.x -= girl.velx
+            elif self.x < 85:
+                self.x -= girl.velx
+            self._x += (girl.velx)
 
 class Campo(Campo):
 
@@ -83,9 +89,9 @@ class Botao(Botao):
     def update(self):
 
         if boy._campo._collides_with(self._campo) or girl._campo._collides_with(self._campo):
-            self.file='./assets/images/imagem-vazia2.png'
+            self.file = './assets/images/imagem-vazia2.png'
         else:
-            self.file='./assets/images/botao.png'
+            self.file = './assets/images/botao.png'
 
 if __name__ == '__main__':
 

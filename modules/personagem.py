@@ -14,9 +14,6 @@ class Vetor:
 
 Vetor.ZERO = Vetor(0, 0)
 
-class Teste:
-    pass
-
 class Contador:
     def __init__(self, maximo):
         self._maximo = maximo
@@ -174,12 +171,16 @@ class Personagem(BaseImage):
     
     def colisao_cubo(self, cubo: Cubo) -> None:
 
-        if self._campo._collides_with(cubo._campo) and self._campo._y < cubo._campo._y:
-            self._y = cubo._campo._y*0.75
+        if self._campo._collides_with(cubo._campo) and self._campo._y < cubo._campo.y - cubo._campo._height:
+            self._y = cubo._campo.y*0.85
             self._campo._y = self._y
             self.tempo_caindo = 0
             self._contador_de_pulos = 0
-            
+        if self._campo._collides_with(cubo._campo) and cubo.x > 820:
+            self.atualiza_posicao(Vetor(-self.velx, 0))
+        elif self._campo._collides_with(cubo._campo) and cubo.x < 85:
+            self.atualiza_posicao(Vetor(-self.velx, 0))
+
             
     def update(self) -> None:
         self._contador.incrementa()

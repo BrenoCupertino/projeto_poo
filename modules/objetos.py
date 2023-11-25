@@ -41,12 +41,8 @@ class Cubo(Image):
         
         self.y += min(10, (self.tempo_caindo_cubo/30) * self.GRAVIDADE)
         self.tempo_caindo_cubo += 2
-        self._campo._x = self._x
-        self._campo._y = self._y
-        if self._x > 820:
-            self._x = 820
-        elif self._x < 85:
-            self._x = 85
+        self._campo.x = self.x
+        self._campo.y = self.y
 
 class Vazio(Image):
 
