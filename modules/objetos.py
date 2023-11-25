@@ -1,44 +1,83 @@
 from tupy import *
 
 class Diamante(BaseImage):
+
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None, cor: str | None = None) -> None:
+        
         super().__init__(file, x,y)
-        self._cor=cor
+        self._cor = cor
 
 class Plataforma(Image):
+
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
+        
         super().__init__(file, x, y)
+
     def set_x(self, x: int) -> None:
+        
         self._x = x
 
     def set_y(self, y: int) -> None:
+        
         self._y = y
 
 class Obstaculo(BaseImage):
+
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None, tipo: str | None = None) -> None:
+        
         super().__init__(file, x, y)
-        self._tipo=tipo
-    
-    @property
-    def x(self):
-        return self._x
-    
-    @property
-    def y(self):
-        return self._y
+        self._tipo = tipo
 
 class Cubo(Image):
     GRAVIDADE = 5
 
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
+        
         super().__init__(file, x, y)
         self.tempo_caindo_cubo = 0
-        self._campo=Vazio('./assets/images/imagem-vazia1.png',self.x,self.y)
+        self._campo = Vazio('./assets/images/imagem-vazia1.png',self.x,self.y)
+
     def update(self) -> None:
+        
         self.y += min(10, (self.tempo_caindo_cubo/30) * self.GRAVIDADE)
         self.tempo_caindo_cubo += 2
-        self._campo._x=self._x
-        self._campo._y=self._y
+        self._campo._x = self._x
+        self._campo._y = self._y
+        if self._x > 820:
+            self._x = 820
+        elif self._x < 85:
+            self._x = 85
+
 class Vazio(Image):
+
     def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
+        
         super().__init__(file, x, y)
+
+class Botao(Image):
+
+    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None, cor: str | None = None) -> None:
+        
+        super().__init__(file, x,y)
+        self._campo = Vazio('./assets/images/imagem-vazia2.png',self.x,self.y)
+
+class Elevador(BaseImage):
+
+    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
+        
+        super().__init__(file, x, y)
+        self._pilha = 0
+
+class Plataforma(Image):
+    
+    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
+        
+        super().__init__(file, x, y)
+
+    def set_x(self, x: int) -> None:
+        
+        self._x = x
+
+    def set_y(self, y: int) -> None:
+        
+        self._y = y

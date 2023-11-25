@@ -1,6 +1,6 @@
 from tupy import *
 from enum import Enum
-from modules.objetos import Vazio
+from modules.objetos import *
 
 class Vetor:
     def __init__(self, x, y):
@@ -125,10 +125,10 @@ class Personagem(BaseImage):
 
         if (self._y <= 340 and self._y >= 300)  and (self._x >= 540 and self._x <= 600):
             self._destroy()
-        elif self._elemento == 'fogo':
+        elif self._elemento == 'fire':
             if (self._y <= 481 and self._y >= 430) and (self._x >= 565 and self._x <= 618):
                 self._destroy()
-        elif self._elemento == 'agua':
+        elif self._elemento == 'water':
             if (self._y <= 481 and self._y >= 430) and (self._x >= 370 and self._x <= 420):
                 self._destroy()
 
@@ -146,8 +146,13 @@ class Personagem(BaseImage):
     
     def colisao_elevador(self, elevador: BaseImage) -> None:
 
-        if self._collides_with(elevador):
+        if self._campo._collides_with(elevador) and self._y < elevador._y:
+            self._y = elevador._y - self._campo._height*0.75
+            self._campo._y = self._y
             self.tempo_caindo = 0
+            self._contador_de_pulos = 0
+        elif self._campo._collides_with(elevador) and self._y > elevador._y:
+            self.atualiza_posicao(Vetor(0, -self.vely))
     
     def colisao_diamantes(self, diamantes: list) -> None:
 
@@ -165,6 +170,16 @@ class Personagem(BaseImage):
                         lista.remove(item)
                         item.destroy()
     
+    def colisao_cubo(self, cubo: Cubo) -> None:
+
+        if self._campo._collides_with(cubo) and self._y < cubo.y:
+            self._y = cubo.y - self._campo._height*0.75
+            self._campo._y = self._y
+            self.tempo_caindo = 0
+            self._contador_de_pulos = 0
+        elif self._campo._collides_with(cubo) and self._y > cubo.y:
+            self.atualiza_posicao(Vetor(0, -self.vely))
+            
     def update(self) -> None:
         self._contador.incrementa()
         self.obtem_velocidade()

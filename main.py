@@ -2,13 +2,8 @@ from typing import Optional
 from tupy import *
 from modules.personagem import *
 from modules.porta import Porta
-from modules.botao import Botao
 from modules.campo import Campo
 from modules.objetos import *
-
-class Elevador(BaseImage):
-    def __init__(self, file: str | None = None, x: int | None = None, y: int | None = None) -> None:
-        super().__init__(file, x, y)
         
 class Personagem(Personagem):
 
@@ -18,6 +13,7 @@ class Personagem(Personagem):
         self.colisao_plataformas(plataformas)
         self.colisao_elevador(elevador)
         self.colisao_diamantes(diamantes)
+        #self.colisao_cubo(cubo)
         
 
 class Porta(Porta):
@@ -37,6 +33,7 @@ class Porta(Porta):
 class Cubo(Cubo):
 
     def update(self) -> None:
+
         super().update()
         for lista in plataformas:
             for item in lista:
@@ -49,6 +46,43 @@ class Cubo(Cubo):
         if self._campo._collides_with(girl._campo):
             self._x += (girl.velocidade_atual.x)
 
+class Campo(Campo):
+
+    def update(self):
+
+        if porta_fogo._file=='./assets/images/firegate6.png' and porta_agua._file=='./assets/images/watergate6.png':
+            toast("Fim de jogo",10000)
+            boy.destroy() #Pra travar o jogo apos terminar
+            girl.destroy()
+
+class Elevador(Elevador):
+
+    def update(self):
+
+        if boy._campo._collides_with(botao_baixo) or girl._campo._collides_with(botao_baixo._campo):
+            if self._y>135:
+                self._y-=5
+            self._pilha=1
+        elif boy._campo._collides_with(botao_cima) or girl._campo._collides_with(botao_cima._campo):
+            if self._y<230:
+                self._y+=5
+            self._pilha=2
+        elif self._pilha==1:
+            if self._y<230:
+                self._y+=5
+        elif self._pilha==2:
+            if self._y>135:
+                self._y-=5
+
+
+class Botao(Botao):
+
+    def update(self):
+
+        if boy._campo._collides_with(self._campo) or girl._campo._collides_with(self._campo):
+            self.file='./assets/images/imagem-vazia2.png'
+        else:
+            self.file='./assets/images/botao.png'
 
 if __name__ == '__main__':
 
@@ -61,9 +95,9 @@ if __name__ == '__main__':
     boy: Personagem = Personagem(115, 439, 'fire')
     girl: Personagem = Personagem(115, 363, 'water')
     elevador: Elevador = Elevador("./assets/images/elevador.png",800, 230)
-    botao0: Botao = Botao("./assets/images/botao.png",730,219)
-    botao2: Botao = Botao("./assets/images/botao.png",700,125)
-    cubo: Cubo = Cubo('./assets/images/cubo.png',200,300)
+    botao_baixo: Botao = Botao("./assets/images/botao.png",730,219, elevador)
+    botao_cima: Botao = Botao("./assets/images/botao.png",700,125, elevador)
+    #cubo: Cubo = Cubo('./assets/images/cubo.png',200,300)
     plataformas: list[list[Plataforma]] = [
         [
         Plataforma('./assets/images/plataforma1.1.png',211,481), Plataforma('./assets/images/plataforma1.2.png',495,481), Plataforma('./assets/images/plataforma1.3.png',733,481),Plataforma('./assets/images/plataforma01.png', 190, 400), Plataforma(urlOriginal, 815, 410), Plataforma(urlRampa, 776, 410)
