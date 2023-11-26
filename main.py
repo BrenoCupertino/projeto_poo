@@ -21,7 +21,7 @@ class Personagem(Personagem):
 
 class Porta(Porta):
     
-    def update(self):
+    def update(self) -> None:
 
         super().update()
         if self._collides_with(boy._campo) and self._tipo == boy._elemento:
@@ -66,22 +66,22 @@ class Campo(Campo):
 
 class Elevador(Elevador):
 
-    def update(self):
+    def update(self) -> None:
 
         if boy._campo._collides_with(botao_baixo) or girl._campo._collides_with(botao_baixo._campo):
-            if self._y>135:
-                self._y-=5
-            self._pilha=1
+            if self._y > 135:
+                self._y -= 5
+            self._pilha = 1
         elif boy._campo._collides_with(botao_cima) or girl._campo._collides_with(botao_cima._campo):
-            if self._y<230:
-                self._y+=5
-            self._pilha=2
-        elif self._pilha==1:
-            if self._y<230:
-                self._y+=5
-        elif self._pilha==2:
-            if self._y>135:
-                self._y-=5
+            if self._y < 230:
+                self._y += 5
+            self._pilha = 2
+        elif self._pilha == 1:
+            if self._y < 230:
+                self._y += 5
+        elif self._pilha == 2:
+            if self._y > 135:
+                self._y -= 5
 
 
 class Botao(Botao):
@@ -125,7 +125,7 @@ if __name__ == '__main__':
         ],
 
         [
-            Plataforma('./assets/images/plataforma01.png', 190, 475), Plataforma('./assets/images/plataforma01.png', 225, 475), Plataforma(urlOriginal, 470, 475), Plataforma(urlOriginal, 525, 475), Plataforma('./assets/images/plataforma01.png', 770, 475), Plataforma(urlOriginal, 570, 366), Plataforma('./assets/images/plataforma01.png', 500, 500)
+            Plataforma('./assets/images/plataforma01.png', 190, 475), Plataforma('./assets/images/plataforma01.png', 225, 475), Plataforma(urlOriginal, 470, 475), Plataforma(urlOriginal, 525, 475), Plataforma('./assets/images/plataforma01.png', 770, 475), Plataforma(urlOriginal, 570, 366), Plataforma('./assets/images/plataforma01.png', 500, 495)
         ]
     ]
     diamantes: list[list[Diamante]] = [[Diamante('./assets/images/diamante-azul.png',592,450,"azul"),Diamante('./assets/images/diamante-azul.png',400,185,"azul"),Diamante('./assets/images/diamante-azul.png',509,330,"azul"),Diamante('./assets/images/diamante-azul.png',534,70,"azul")],

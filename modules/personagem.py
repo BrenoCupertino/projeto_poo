@@ -3,11 +3,13 @@ from enum import Enum
 from modules.objetos import *
 
 class Vetor:
-    def __init__(self, x, y):
+
+    def __init__(self, x: int, y: int) -> None:
         self.x = x
         self.y = y
 
-    def __eq__(self, outro):
+    def __eq__(self, outro: any) -> bool:
+
         return isinstance(outro, Vetor) and \
             self.x == outro.x and \
             self.y == outro.y
@@ -15,11 +17,13 @@ class Vetor:
 Vetor.ZERO = Vetor(0, 0)
 
 class Contador:
-    def __init__(self, maximo):
-        self._maximo = maximo
-        self._contador = 0
 
-    def incrementa(self):
+    def __init__(self, maximo: int) -> None:
+        self._maximo: int = maximo
+        self._contador: int = 0
+
+    def incrementa(self) -> None:
+
         self._contador += 1
         if self._contador == self._maximo:
             self._contador = 0
@@ -29,6 +33,7 @@ class Contador:
 
 class Direcao(Enum):
     CIMA = "pulo"
+    BAIXO = "queda"
     ESQUERDA = "esquerda"
     DIREITA = "direita"
     NULO= "frente"
@@ -38,6 +43,7 @@ class Personagem(BaseImage):
     GRAVIDADE = 5
 
     def __init__(self, x: int | None = None, y: int | None = None, elemento: str | None = None) -> None:
+        
         self._elemento = elemento
         if self._elemento == "fire":
             self._file = './assets/images/boyfrente0.png'
@@ -51,9 +57,9 @@ class Personagem(BaseImage):
         self._qtd_diamantes = 0
         self._x = x
         self._y = y
-        self._direcao="frente"
-        self._contador=Contador(7)
-        self._quadro: int=0
+        self._direcao = "frente"
+        self._contador = Contador(7)
+        self._quadro: int = 0
         self.tempo_caindo = 0
         self.velx = 0
         self.vely = 0
@@ -73,7 +79,7 @@ class Personagem(BaseImage):
         self.velx = 0
         self.vely = 0
         if keyboard.is_key_down(self._l1[0]):
-            if self._contador_de_pulos < 7:
+            if self._contador_de_pulos < 5:
                 self.vely -= Personagem.VELOCIDADE
                 self._contador_de_pulos += 1
         if keyboard.is_key_down(self._l1[1]):
@@ -86,10 +92,12 @@ class Personagem(BaseImage):
     def obtem_direcao(self, vel: Vetor) -> Direcao:
         if vel.y < 0:
             return Direcao.CIMA
-        elif vel.x < 0:
-            return Direcao.ESQUERDA
         elif vel.x > 0:
             return Direcao.DIREITA
+        elif vel.x < 0:
+            return Direcao.ESQUERDA
+        elif self.tempo_caindo > 0:
+            return Direcao.BAIXO
         else:
             return Direcao.NULO
     
