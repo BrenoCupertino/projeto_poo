@@ -1,21 +1,21 @@
 from tupy import *
 from enum import Enum
+from typing import Any
 from modules.objetos import *
 
 class Vetor:
 
-    def __init__(self, x: int, y: int) -> None:
+    def __init__(self, x: int, y: int | float) -> None:
         self.x = x
         self.y = y
 
-    def __eq__(self, outro: any) -> bool:
+    def __eq__(self, outro: Any) -> bool:
 
         return isinstance(outro, Vetor) and \
             self.x == outro.x and \
             self.y == outro.y
 
-Vetor.ZERO = Vetor(0, 0)
-
+vetor_Zero = Vetor(0, 0)
 class Contador:
 
     def __init__(self, maximo: int) -> None:
@@ -28,7 +28,7 @@ class Contador:
         if self._contador == self._maximo:
             self._contador = 0
     
-    def esta_zerado(self):
+    def esta_zerado(self) -> bool:
         return self._contador == 0
 
 class Direcao(Enum):
@@ -36,13 +36,13 @@ class Direcao(Enum):
     BAIXO = "queda"
     ESQUERDA = "esquerda"
     DIREITA = "direita"
-    NULO= "frente"
+    NULO = "frente"
         
 class Personagem(BaseImage):
     VELOCIDADE = 10
     GRAVIDADE = 5
 
-    def __init__(self, x: int | None = None, y: int | None = None, elemento: str | None = None) -> None:
+    def __init__(self, x: int, y: int, elemento: str) -> None:
         
         self._elemento = elemento
         if self._elemento == "fire":
@@ -53,11 +53,11 @@ class Personagem(BaseImage):
             self._file = './assets/imagens/girlfrente0.png'
             self._tipo = 'girl'
             self._l1 = ["w", "a", "d"]
-        self._campo = Vazio('./assets/images/imagem-vazia0.png',self._x, self._y)
+        self._campo = Vazio('./assets/images/imagem-vazia0.png', self._x, self._y)
         self._qtd_diamantes = 0
         self._x = x
         self._y = y
-        self._direcao = "frente"
+        self._direcao: Direcao = Direcao.NULO
         self._contador = Contador(7)
         self._quadro: int = 0
         self.tempo_caindo = 0
@@ -67,14 +67,14 @@ class Personagem(BaseImage):
         self._contador_de_pulos = 0
 
     @property
-    def x(self):
+    def x(self) -> int | float:
         return self._x
     
     @property
-    def y(self):
+    def y(self) -> int | float:
         return self._y
     
-    def obtem_velocidade(self) -> Vetor:
+    def obtem_velocidade(self) -> None:
         
         self.velx = 0
         self.vely = 0
@@ -89,17 +89,17 @@ class Personagem(BaseImage):
         self.velocidade_atual.x = self.velx
         self.velocidade_atual.y = self.vely
     
-    def obtem_direcao(self, vel: Vetor) -> Direcao:
+    def obtem_direcao(self, vel: Vetor) -> None:
         if vel.y < 0:
-            return Direcao.CIMA
+            self._direcao = Direcao.CIMA
         elif vel.x > 0:
-            return Direcao.DIREITA
+            self._direcao = Direcao.DIREITA
         elif vel.x < 0:
-            return Direcao.ESQUERDA
+            self._direcao = Direcao.ESQUERDA
         elif self.tempo_caindo > 0:
-            return Direcao.BAIXO
+            self._direcao = Direcao.BAIXO
         else:
-            return Direcao.NULO
+            self._direcao = Direcao.NULO
     
     def gravidade(self) -> None:
 
@@ -107,6 +107,7 @@ class Personagem(BaseImage):
         self.tempo_caindo += 2
                         
     def atualiza_imagem(self) -> None:
+
         nome = self._direcao.value
         self._file = f'./assets/images/{self._tipo}{nome}{self._quadro}.png'
 
@@ -122,7 +123,7 @@ class Personagem(BaseImage):
         elif self._y > 520:
             self._y = 520
         else:
-            self._y += velocidade.y
+            self._y += int(velocidade.y)
         self._campo._x = self._x
         self._campo._y = self._y + 5
     
@@ -139,36 +140,36 @@ class Personagem(BaseImage):
                 toast("Fim de jogo",10000)
                 self._destroy()
 
-    def colisao_plataformas(self, plataformas: list) -> None:
+    def colisao_plataformas(self, plataformas: list[list[Plataforma]]) -> None:
 
         for lista in plataformas:
             for item in lista:
                 if self._campo._collides_with(item) and self._y < item._y:
-                    self._y = item._y - self._campo._height*0.75
+                    self._y = int(item._y - self._campo._height*0.75)
                     self._campo._y = self._y
                     self.tempo_caindo = 0
                     self._contador_de_pulos = 0
                 elif self._campo._collides_with(item) and self._y > item._y:
                     self.atualiza_posicao(Vetor(0, -self.vely))
     
-    def colisao_elevador(self, elevador: BaseImage) -> None:
+    def colisao_elevador(self, elevador: Elevador) -> None:
 
         if self._campo._collides_with(elevador) and self._y < elevador._y:
-            self._y = elevador._y - self._campo._height*0.75
+            self._y = int(elevador._y - self._campo._height*0.75)
             self._campo._y = self._y
             self.tempo_caindo = 0
             self._contador_de_pulos = 0
         elif self._campo._collides_with(elevador) and self._y > elevador._y:
             self.atualiza_posicao(Vetor(0, -self.vely))
     
-    def colisao_diamantes(self, diamantes: list) -> None:
+    def colisao_diamantes(self, diamantes: list[list[Diamante]]) -> None:
 
         #Verificar se o personagem conseguiu diamantes
         for lista in diamantes:
             for item in lista:
                 if self._campo._collides_with(item):
                     if self._elemento=='fire' and item._cor=='vermelho':
-                        self._qtd_diamantes+=1
+                        self._qtd_diamantes += 1
                         lista.remove(item)
                         item.destroy()
                         
@@ -193,12 +194,12 @@ class Personagem(BaseImage):
     def update(self) -> None:
         self._contador.incrementa()
         self.obtem_velocidade()
-        self._direcao = self.obtem_direcao(self.velocidade_atual)
+        self.obtem_direcao(self.velocidade_atual)
         self.atualiza_posicao(self.velocidade_atual)
         self.atualiza_imagem()
         self.gravidade()
 
-        if self.velocidade_atual == Vetor.ZERO:
+        if self.velocidade_atual == vetor_Zero:
             self._quadro = 0
         elif self._contador.esta_zerado():
             self._quadro = 1 - self._quadro

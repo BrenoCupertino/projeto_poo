@@ -5,9 +5,9 @@ from modules.porta import Porta
 from modules.campo import Campo
 from modules.objetos import *
         
-class Personagem(Personagem):
+class Personagem_Main(Personagem):
 
-    def update(self):
+    def update(self) -> None:
 
         super().update()
         self.colisao_plataformas(plataformas)
@@ -19,7 +19,7 @@ class Personagem(Personagem):
         self.colisao_obstaculo(water)
         
 
-class Porta(Porta):
+class Porta_Main(Porta):
     
     def update(self) -> None:
 
@@ -31,7 +31,7 @@ class Porta(Porta):
         else:
             self._c1 = False
 
-class Cubo(Cubo):
+class Cubo_Main(Cubo):
 
     def update(self) -> None:
 
@@ -55,16 +55,16 @@ class Cubo(Cubo):
                 self.x -= girl.velx
             self._x += (girl.velx)
 
-class Campo(Campo):
+class Campo_Main(Campo):
 
-    def update(self):
+    def update(self) -> None:
 
         if porta_fogo._file=='./assets/images/firegate6.png' and porta_agua._file=='./assets/images/watergate6.png':
             toast("Fim de jogo",10000)
             boy.destroy() #Pra travar o jogo apos terminar
             girl.destroy()
 
-class Elevador(Elevador):
+class Elevador_Main(Elevador):
 
     def update(self) -> None:
 
@@ -84,9 +84,9 @@ class Elevador(Elevador):
                 self._y -= 5
 
 
-class Botao(Botao):
+class Botao_Main(Botao):
 
-    def update(self):
+    def update(self) -> None:
 
         if boy._campo._collides_with(self._campo) or girl._campo._collides_with(self._campo):
             self.file = './assets/images/imagem-vazia2.png'
@@ -101,12 +101,12 @@ if __name__ == '__main__':
     urlRampa02: str = './assets/images/rampa02.png'
     porta_fogo: Porta = Porta("./assets/images/firegate0.png", 110, 92, 'fire')
     porta_agua: Porta = Porta("./assets/images/watergate0.png", 210, 92, 'water')
-    boy: Personagem = Personagem(115, 439, 'fire')
-    girl: Personagem = Personagem(115, 363, 'water')
-    elevador: Elevador = Elevador("./assets/images/elevador.png", 800, 230)
-    botao_baixo: Botao = Botao("./assets/images/botao.png", 730, 219, elevador)
-    botao_cima: Botao = Botao("./assets/images/botao.png", 700, 125, elevador)
-    cubo: Cubo = Cubo('./assets/images/cubo.png', 200, 300)
+    boy: Personagem_Main = Personagem_Main(115, 439, 'fire')
+    girl: Personagem_Main = Personagem_Main(115, 363, 'water')
+    elevador: Elevador_Main = Elevador_Main("./assets/images/elevador.png", 800, 230)
+    botao_baixo: Botao_Main = Botao_Main("./assets/images/botao.png", 730, 219)
+    botao_cima: Botao_Main = Botao_Main("./assets/images/botao.png", 700, 125)
+    cubo: Cubo_Main = Cubo_Main('./assets/images/cubo.png', 200, 300)
     plataformas: list[list[Plataforma]] = [
         [
         Plataforma('./assets/images/plataforma1.1.png',211,481), Plataforma('./assets/images/plataforma1.2.png',495,481), Plataforma('./assets/images/plataforma1.3.png',733,481),Plataforma('./assets/images/plataforma01.png', 190, 400), Plataforma(urlOriginal, 815, 410), Plataforma(urlRampa, 776, 410)

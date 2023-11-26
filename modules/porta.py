@@ -7,7 +7,7 @@ class Porta(BaseImage):
         
         super().__init__(file, x, y)
         self._tipo = tipo
-        self._c1 = False
+        self._c1: bool = False
         self._contador_porta = 0
         self._posicao_porta = 0
 
