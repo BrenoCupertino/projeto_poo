@@ -17,7 +17,7 @@ Para movimentar o **Fireboy** ![Fireboy](https://github.com/BrenoCupertino/proje
 1. Mayara Rodrigues Euclides Santos `(Nota: 5)`
    - Redimensionamento das imagens;
    - Construção do cenário;
-   - Iterações dos personagens com o elevador, portas, botões e diamantes;
+   - Interações dos personagens com o elevador, portas, botões e diamantes;
    - Atualizações das imagens dos personagens.
 ***
 3. Breno Nascimento da Silva Cupertino `(Nota: 5)`
@@ -27,6 +27,6 @@ Para movimentar o **Fireboy** ![Fireboy](https://github.com/BrenoCupertino/proje
 ***
 5. Gabriel Baptista de Abreu `(Nota: 5)`
    - Ação de pulo do personagem;
-   - Revisão e concerto de partes do código;
-   - iterações dos personagens com o bloco;
+   - Revisão e conserto de partes do código;
+   - Interações dos personagens com o bloco;
    - Altualizações das imagens dos personagens.
