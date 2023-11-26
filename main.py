@@ -95,12 +95,12 @@ class Botao_Main(Botao):
 
 if __name__ == '__main__':
 
-    nivel1: Campo = Campo('./assets/images/campo-teste.png', 450, 250)
+    nivel1: Campo_Main = Campo_Main('./assets/images/campo-teste.png', 450, 250)
     urlOriginal: str = './assets/images/plataforma-original.png'
     urlRampa: str = './assets/images/rampa.png'
     urlRampa02: str = './assets/images/rampa02.png'
-    porta_fogo: Porta = Porta("./assets/images/firegate0.png", 110, 92, 'fire')
-    porta_agua: Porta = Porta("./assets/images/watergate0.png", 210, 92, 'water')
+    porta_fogo: Porta_Main = Porta_Main("./assets/images/firegate0.png", 110, 92, 'fire')
+    porta_agua: Porta_Main = Porta_Main("./assets/images/watergate0.png", 210, 92, 'water')
     boy: Personagem_Main = Personagem_Main(115, 439, 'fire')
     girl: Personagem_Main = Personagem_Main(115, 363, 'water')
     elevador: Elevador_Main = Elevador_Main("./assets/images/elevador.png", 800, 230)
