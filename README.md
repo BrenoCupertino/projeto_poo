@@ -14,7 +14,7 @@ Para movimentar o **Fireboy** ![Fireboy](https://github.com/BrenoCupertino/proje
 
 ## Participantes
 
-1. Mayara `(Nota: 5)`
+1. Mayara Rodrigues Euclides Santos `(Nota: 5)`
    - Redimensionamento das imagens;
    - Construção do cenário;
    - Iterações dos personagens com o elevador, portas, botões e diamantes;
